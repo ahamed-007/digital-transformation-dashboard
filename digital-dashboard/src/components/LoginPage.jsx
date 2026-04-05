@@ -33,12 +33,7 @@ export default function LoginPage({ onLogin }) {
         setError(data.message || "Invalid credentials.");
       }
     } catch {
-      // Offline fallback — accept demo credentials
-      if (email === "admin@digicampus.edu" && password === "admin123") {
-        onLogin({ name: "Admin", email, role: "Administrator", avatar: "AD" });
-      } else {
-        setError("Server offline. Use: admin@digicampus.edu / admin123");
-      }
+      setError("Unable to connect to the server. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -162,14 +157,7 @@ export default function LoginPage({ onLogin }) {
               )}
             </button>
 
-            <div className="login-divider">
-              <span>Demo Credentials</span>
-            </div>
 
-            <div className="login-demo">
-              <p><strong>Email:</strong> admin@digicampus.edu</p>
-              <p><strong>Password:</strong> admin123</p>
-            </div>
           </form>
         </div>
       </div>
