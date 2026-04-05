@@ -1,0 +1,14 @@
+# ── Render Blueprint ─────────────────────────────────────────
+# This file lets Render auto-configure the service.
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: digicampus-dashboard
+    runtime: node
+    plan: free
+    buildCommand: npm run render-build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
