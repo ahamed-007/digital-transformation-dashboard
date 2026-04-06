@@ -42,7 +42,6 @@ export const DEPT_PROGRESS = [
 
 export const INITIATIVES = {
   All: [
-    { name: "ERP System Rollout",       dept: "Admin",     status: "On Track",   progress: 72 },
     { name: "Paperless Admissions",     dept: "Admin",     status: "Complete",   progress: 100 },
     { name: "AI Attendance System",     dept: "Academics", status: "In Progress",progress: 55 },
     { name: "Digital Payment Gateway",  dept: "Finance",   status: "On Track",   progress: 68 },
@@ -52,7 +51,6 @@ export const INITIATIVES = {
     { name: "Online Exam Portal",       dept: "Academics", status: "In Progress",progress: 60 },
   ],
   Admin:     [
-    { name: "ERP System Rollout",       dept: "Admin", status: "On Track",  progress: 72 },
     { name: "Paperless Admissions",     dept: "Admin", status: "Complete",  progress: 100 },
     { name: "E-Procurement Portal",     dept: "Admin", status: "On Track",  progress: 80 },
     { name: "Document Management",      dept: "Admin", status: "Complete",  progress: 100 },

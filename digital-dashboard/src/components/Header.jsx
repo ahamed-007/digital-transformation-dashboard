@@ -7,7 +7,7 @@ const PAGE_INFO = {
   settings:    { title: "Settings",    subtitle: "Configure dashboard preferences" },
 };
 
-export default function Header({ activeDept, setActiveDept, activeYear, setActiveYear, departments, activePage, apiConnected }) {
+export default function Header({ activeDept, setActiveDept, activeYear, setActiveYear, departments, activePage, apiConnected, theme, toggleTheme }) {
   const years = ["2023-24", "2024-25", "2025-26"];
   const info = PAGE_INFO[activePage] || PAGE_INFO.dashboard;
 
@@ -42,6 +42,9 @@ export default function Header({ activeDept, setActiveDept, activeYear, setActiv
             ))}
           </select>
         </div>
+        <button className="theme-toggle-btn" onClick={toggleTheme}>
+          {theme === "light" ? "🌙" : "☀️"}
+        </button>
         <div className={`live-badge ${apiConnected ? "" : "live-badge-offline"}`}>
           <span className="live-dot" />
           {apiConnected ? "API Live" : "Offline"}

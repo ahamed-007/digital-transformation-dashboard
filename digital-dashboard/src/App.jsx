@@ -33,6 +33,17 @@ export default function App() {
     return saved ? JSON.parse(saved) : null;
   });
 
+  // Theme state
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("digicampus_theme") || "light";
+  });
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("digicampus_theme", newTheme);
+  };
+
   // API state
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -129,7 +140,7 @@ export default function App() {
   };
 
   return (
-    <div className={`app-shell ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div className={`app-shell ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`} data-theme={theme}>
       <Sidebar
         open={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
@@ -147,6 +158,8 @@ export default function App() {
           departments={DEPARTMENTS}
           activePage={activePage}
           apiConnected={apiConnected}
+          theme={theme}
+          toggleTheme={toggleTheme}
         />
         <div className="dashboard-body">
           {renderPage()}
