@@ -10,6 +10,8 @@ const REPORT_TYPES = [
 
 export default function ReportsPage({ dept, year }) {
   const [selectedReport, setSelectedReport] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const kpi = KPI_DATA[dept] || KPI_DATA["All"];
   const maturity = MATURITY_SCORES[dept] || MATURITY_SCORES["All"];
@@ -19,6 +21,23 @@ export default function ReportsPage({ dept, year }) {
   const avgProgress = initiatives.length > 0 ? Math.round(initiatives.reduce((s, i) => s + i.progress, 0) / initiatives.length) : 0;
 
   const handleClose = () => setSelectedReport(null);
+
+  const handlePrint = () => {
+    setIsPrinting(true);
+    setTimeout(() => {
+      window.print();
+      setIsPrinting(false);
+    }, 500);
+  };
+
+  const handleDownload = () => {
+    setIsGenerating(true);
+    // Simulate complex PDF compilation
+    setTimeout(() => {
+      setIsGenerating(false);
+      alert(`Report "${selectedReport.title}" generated successfully. Check your browser's downloads.`);
+    }, 2500);
+  };
 
   const renderReportContent = () => {
     if (!selectedReport) return null;
@@ -155,8 +174,20 @@ export default function ReportsPage({ dept, year }) {
               {renderReportContent()}
             </div>
             <div className="report-modal-footer">
-              <button className="download-btn active">Download PDF</button>
-              <button className="print-btn">Print Report</button>
+              <button 
+                className={`download-btn ${isGenerating ? "active" : ""}`}
+                onClick={handleDownload}
+                disabled={isGenerating}
+              >
+                {isGenerating ? "Generating..." : "Download PDF"}
+              </button>
+              <button 
+                className="print-btn"
+                onClick={handlePrint}
+                disabled={isPrinting}
+              >
+                {isPrinting ? "Printing..." : "Print Report"}
+              </button>
               <button className="close-btn-alt" onClick={handleClose}>Close</button>
             </div>
           </div>

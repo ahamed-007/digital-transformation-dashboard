@@ -12,6 +12,7 @@ import InitiativesPage from "./components/InitiativesPage";
 import DepartmentsPage from "./components/DepartmentsPage";
 import ReportsPage from "./components/ReportsPage";
 import SettingsPage from "./components/SettingsPage";
+import AIInsights from "./components/AIInsights";
 import LoginPage from "./components/LoginPage";
 import { fetchDashboard } from "./api";
 import "./index.css";
@@ -134,6 +135,7 @@ export default function App() {
               <DeptProgress activeDept={activeDept} apiData={apiData} />
               <InitiativeTracker dept={activeDept} apiData={apiData} />
             </div>
+            <AIInsights dept={activeDept} apiData={apiData} />
           </>
         );
     }
@@ -158,6 +160,7 @@ export default function App() {
           departments={DEPARTMENTS}
           activePage={activePage}
           apiConnected={apiConnected}
+          apiData={apiData}
           theme={theme}
           toggleTheme={toggleTheme}
         />

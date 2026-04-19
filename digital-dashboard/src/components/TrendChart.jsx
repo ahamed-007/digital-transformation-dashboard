@@ -12,6 +12,7 @@ export default function TrendChart({ dept, apiData }) {
     const trendLabels = apiData?.trends?.labels || TREND_DATA.labels;
     const trendActual = apiData?.trends?.actual || (TREND_DATA[dept] || TREND_DATA["All"]).actual;
     const trendTarget = apiData?.trends?.target || (TREND_DATA[dept] || TREND_DATA["All"]).target;
+    const trendForecast = apiData?.trends?.forecast || (TREND_DATA[dept] || TREND_DATA["All"]).forecast;
 
     if (chartRef.current) chartRef.current.destroy();
 
@@ -40,6 +41,18 @@ export default function TrendChart({ dept, apiData }) {
             backgroundColor: "transparent",
             tension: 0.4,
             pointRadius: 0,
+          },
+          {
+            label: "Forecast %",
+            data: trendForecast,
+            borderColor: "#7C3AED",
+            borderDash: [4, 4],
+            backgroundColor: "transparent",
+            tension: 0.4,
+            pointRadius: 3,
+            pointBackgroundColor: "#7C3AED",
+            pointBorderColor: "#fff",
+            pointBorderWidth: 1,
           },
         ],
       },
@@ -84,6 +97,7 @@ export default function TrendChart({ dept, apiData }) {
         <div className="chart-legend">
           <span className="leg"><span className="leg-dot" style={{ background: "#2563EB" }} />Actual</span>
           <span className="leg"><span className="leg-dot leg-dashed" style={{ borderColor: "#D97706" }} />Target</span>
+          <span className="leg"><span className="leg-dot leg-dashed" style={{ borderColor: "#7C3AED" }} />Forecast</span>
         </div>
       </div>
       <div style={{ position: "relative", height: 210 }}>

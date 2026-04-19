@@ -7,7 +7,9 @@ const PAGE_INFO = {
   settings:    { title: "Settings",    subtitle: "Configure dashboard preferences" },
 };
 
-export default function Header({ activeDept, setActiveDept, activeYear, setActiveYear, departments, activePage, apiConnected, theme, toggleTheme }) {
+import NotificationCenter from "./NotificationCenter";
+
+export default function Header({ activeDept, setActiveDept, activeYear, setActiveYear, departments, activePage, apiConnected, apiData, theme, toggleTheme }) {
   const years = ["2023-24", "2024-25", "2025-26"];
   const info = PAGE_INFO[activePage] || PAGE_INFO.dashboard;
 
@@ -42,6 +44,9 @@ export default function Header({ activeDept, setActiveDept, activeYear, setActiv
             ))}
           </select>
         </div>
+        
+        <NotificationCenter apiData={apiData} />
+
         <button className="theme-toggle-btn" onClick={toggleTheme}>
           {theme === "light" ? "🌙" : "☀️"}
         </button>

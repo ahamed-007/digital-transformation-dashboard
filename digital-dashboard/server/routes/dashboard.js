@@ -7,6 +7,8 @@ import {
   INITIATIVES,
   MATURITY_SCORES,
   STATUS_STYLES,
+  INSIGHTS,
+  NOTIFICATIONS,
 } from "../data.js";
 
 const router = Router();
@@ -91,6 +93,8 @@ router.get("/dashboard/:dept", (req, res) => {
     initiatives: INITIATIVES[dept] || INITIATIVES["All"],
     maturity: MATURITY_SCORES[dept] || MATURITY_SCORES["All"],
     statusStyles: STATUS_STYLES,
+    insights: INSIGHTS[dept] || INSIGHTS["All"],
+    notifications: NOTIFICATIONS,
   });
 });
 

@@ -15,12 +15,41 @@ function getStatusLabel(pct) {
 }
 
 export default function DepartmentsPage({ dept, setActiveDept }) {
-  const depts = DEPT_PROGRESS;
+  const depts = [...DEPT_PROGRESS].sort((a, b) => b.pct - a.pct);
   const showAll = dept === "All";
   const displayed = showAll ? depts : depts.filter((d) => d.name === dept);
 
+  const getRankEmoji = (rank) => {
+    if (rank === 0) return "🥇";
+    if (rank === 1) return "🥈";
+    if (rank === 2) return "🥉";
+    return null;
+  };
+
   return (
     <div className="page-content">
+      {/* ── Leaderboard Header ── */}
+      {showAll && (
+        <div className="leaderboard-banner">
+          <div className="leaderboard-info">
+            <span className="trophy-icon">🏆</span>
+            <div>
+              <h2 className="leaderboard-title">Digital Transformation Leaderboard</h2>
+              <p className="leaderboard-subtitle">Top Performer: <strong>{depts[0].name}</strong> with {depts[0].pct}% Digital Adoption</p>
+            </div>
+          </div>
+          <div className="leaderboard-stats">
+            <div className="l-stat">
+              <span className="l-val">{depts.filter(d => d.pct >= 80).length}</span>
+              <span className="l-label">Excellent</span>
+            </div>
+            <div className="l-stat">
+              <span className="l-val">{depts.filter(d => d.pct < 45).length}</span>
+              <span className="l-label">Need Focus</span>
+            </div>
+          </div>
+        </div>
+      )}
       {/* ── Department Cards Grid ── */}
       <div className="dept-cards-grid">
         {displayed.map((d) => {
@@ -35,7 +64,11 @@ export default function DepartmentsPage({ dept, setActiveDept }) {
               {/* Card Header */}
               <div className="dept-card-header" style={{ borderLeftColor: color }}>
                 <div>
-                  <h3 className="dept-card-name">{d.name}</h3>
+                  <div className="name-rank-row">
+                    {showAll && <span className="dept-rank-badge">#{depts.indexOf(d) + 1}</span>}
+                    <h3 className="dept-card-name">{d.name}</h3>
+                    {showAll && <span className="rank-emoji">{getRankEmoji(depts.indexOf(d))}</span>}
+                  </div>
                   <span className="dept-card-status" style={{ color }}>{statusLabel}</span>
                 </div>
                 <div className="dept-card-score" style={{ color }}>
@@ -98,13 +131,19 @@ export default function DepartmentsPage({ dept, setActiveDept }) {
               </tr>
             </thead>
             <tbody>
-              {depts.map((d) => {
+              {depts.map((d, index) => {
                 const kpi = KPI_DATA[d.name] || {};
                 const maturity = MATURITY_SCORES[d.name] || {};
                 const color = getStatusColor(d.pct);
                 return (
-                  <tr key={d.name} className="dept-compare-row" onClick={() => setActiveDept(d.name)}>
-                    <td><strong>{d.name}</strong></td>
+                  <tr key={d.name} className={`dept-compare-row ${index < 3 ? "rank-row" : ""}`} onClick={() => setActiveDept(d.name)}>
+                    <td>
+                      <div className="rank-cell">
+                        <span className="rank-num">#{index + 1}</span>
+                        <strong>{d.name}</strong>
+                        <span className="table-rank-emoji">{getRankEmoji(index)}</span>
+                      </div>
+                    </td>
                     <td>
                       <div className="init-progress-cell">
                         <div className="init-progress-track">
